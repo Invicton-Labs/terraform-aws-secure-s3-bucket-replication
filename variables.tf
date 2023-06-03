@@ -13,10 +13,7 @@ variable "bucket_a_module" {
     inbound_replication_policy_json  = string
     complete                         = bool
   })
-  validation {
-    condition     = var.bucket_a_module != null
-    error_message = "`bucket_a_module` may not be `null`."
-  }
+  nullable = false
 }
 
 variable "bucket_b_module" {
@@ -34,28 +31,19 @@ variable "bucket_b_module" {
     inbound_replication_policy_json  = string
     complete                         = bool
   })
-  validation {
-    condition     = var.bucket_b_module != null
-    error_message = "`bucket_b_module` may not be `null`."
-  }
+  nullable = false
 }
 
 variable "replicate_a_to_b" {
   description = "Whether to replicate objects from bucket A to bucket B."
   type        = bool
-  validation {
-    condition     = var.replicate_a_to_b != null
-    error_message = "`replicate_a_to_b` may not be `null`."
-  }
+  nullable    = false
 }
 
 variable "replicate_b_to_a" {
   description = "Whether to replicate objects from bucket B to bucket A."
   type        = bool
-  validation {
-    condition     = var.replicate_b_to_a != null
-    error_message = "`replicate_b_to_a` may not be `null`."
-  }
+  nullable    = false
 }
 
 variable "a_to_b_rules" {
@@ -71,7 +59,8 @@ variable "a_to_b_rules" {
     event_threshold             = number
     storage_class               = string
   }))
-  default = []
+  default  = []
+  nullable = false
 }
 
 variable "b_to_a_rules" {
@@ -87,7 +76,8 @@ variable "b_to_a_rules" {
     event_threshold             = number
     storage_class               = string
   }))
-  default = []
+  default  = []
+  nullable = false
 }
 
 locals {
@@ -104,6 +94,6 @@ locals {
       storage_class               = null
     }
   ]
-  a_to_b_rules = var.a_to_b_rules != null ? length(var.a_to_b_rules) > 0 ? var.a_to_b_rules : local.default_rules : local.default_rules
-  b_to_a_rules = var.b_to_a_rules != null ? length(var.b_to_a_rules) > 0 ? var.b_to_a_rules : local.default_rules : local.default_rules
+  a_to_b_rules = length(var.a_to_b_rules) > 0 ? var.a_to_b_rules : local.default_rules
+  b_to_a_rules = length(var.b_to_a_rules) > 0 ? var.b_to_a_rules : local.default_rules
 }
