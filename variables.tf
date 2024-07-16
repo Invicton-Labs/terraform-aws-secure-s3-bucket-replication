@@ -80,6 +80,20 @@ variable "b_to_a_rules" {
   nullable = false
 }
 
+variable "tags_iam_role_a_to_b" {
+  description = "A map of tags to apply to the IAM role used for A-to-B replication."
+  type        = map(string)
+  nullable    = true
+  default     = null
+}
+
+variable "tags_iam_role_b_to_a" {
+  description = "A map of tags to apply to the IAM role used for A-to-B replication."
+  type        = map(string)
+  nullable    = true
+  default     = null
+}
+
 locals {
   default_rules = [
     {

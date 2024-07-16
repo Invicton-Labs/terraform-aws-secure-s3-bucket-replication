@@ -21,6 +21,7 @@ resource "aws_iam_role" "a_to_b" {
   provider           = aws.b
   name               = "s3-replication-${md5("${var.bucket_a_module.bucket.id}-${var.bucket_b_module.bucket.id}")}"
   assume_role_policy = data.aws_iam_policy_document.s3_assume.json
+  tags               = var.tags_iam_role_a_to_b
 }
 
 resource "aws_iam_role_policy" "a_outbound" {
@@ -46,6 +47,7 @@ resource "aws_iam_role" "b_to_a" {
   provider           = aws.a
   name               = "s3-replication-${md5("${var.bucket_b_module.bucket.id}-${var.bucket_a_module.bucket.id}")}"
   assume_role_policy = data.aws_iam_policy_document.s3_assume.json
+  tags               = var.tags_iam_role_b_to_a
 }
 
 resource "aws_iam_role_policy" "b_outbound" {
