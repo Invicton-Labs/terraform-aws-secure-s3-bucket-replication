@@ -6,6 +6,7 @@ resource "aws_s3_bucket_replication_configuration" "a_to_b" {
     aws_iam_role_policy.a_outbound,
     aws_iam_role_policy.b_inbound,
   ]
+  region = var.bucket_a_module.region
   role   = aws_iam_role.a_to_b[0].arn
   bucket = var.bucket_a_module.bucket.id
 
@@ -110,6 +111,7 @@ resource "aws_s3_bucket_replication_configuration" "b_to_a" {
     aws_iam_role_policy.b_outbound,
     aws_iam_role_policy.a_inbound,
   ]
+  region = var.bucket_b_module.region
   role   = aws_iam_role.b_to_a[0].arn
   bucket = var.bucket_b_module.bucket.id
 
